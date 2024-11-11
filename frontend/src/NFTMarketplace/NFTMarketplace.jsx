@@ -10,7 +10,7 @@ import styles from './NFTMarketplace.module.css';
 const NFTMarketplace = () => {
   return (
     <div className={styles.marketplaceContainer}>
-      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/d48fc0d57a21b41e6a95bd18e4494c2aceee797ac21f5075f5038d539d5de647?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c" alt="" className={styles.backgroundImage} />
+      <img src="/background.png" alt="ss" className={styles.backgroundImage} />
       <div className={styles.contentWrapper}>
         {/* <Header /> */}
         <h1 className={styles.mainTitle}>NFT Marketplace for Digital Art</h1>

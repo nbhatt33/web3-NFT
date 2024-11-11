@@ -1,45 +1,40 @@
 .group_1 {
   background-image: linear-gradient(270deg, rgba(94, 81, 237, 1) 0, rgba(63, 51, 193, 1) 100%);
-  width: 100%; /* Make the width span the full screen */
+  width: 100%;
   height: 80px;
-  display: flex; /* Ensures the content is laid out flexibly */
-  justify-content: space-between; /* Space out the elements evenly */
+  display: flex; /* Flex layout for alignment */
+  justify-content: center; /* Center all items together */
   align-items: center; /* Vertically center the content */
-  padding: 0 10px; /* Add some padding to the sides */
-  box-sizing: border-box; /* Ensure padding is included in the width */
+  padding: 0 40px; /* Add side margins for spacing */
+  box-sizing: border-box; /* Include padding in width */
+  gap: 100px; /* Space between items */
 }
 
-
-.text_1 {
-  width: auto; /* Allow text width to adjust automatically */
-  color: rgba(255, 255, 255, 1);
-  font-size: 36px;
-  font-family: Alibaba PuHuiTi-Bold;
-  font-weight: 700;
-  white-space: nowrap;
-  line-height: 36px;
-}
-
+.text_1,
 .text_2,
 .text_3,
 .text_4,
 .text_5,
 .text_6 {
-  width: auto; /* Adjust width automatically */
   color: rgba(255, 255, 255, 1);
   font-size: 20px;
   font-family: Alibaba PuHuiTi-Regular;
   font-weight: normal;
   white-space: nowrap;
   line-height: 28px;
-  margin: 0 20px; /* Add spacing between text elements */
+}
+
+.text_1 {
+  font-size: 36px; /* Larger font for the logo */
+  font-family: Alibaba PuHuiTi-Bold;
+  font-weight: 700;
 }
 
 .text-wrapper_1 {
   background-color: rgba(94, 81, 237, 1);
   border-radius: 60px;
   height: 46px;
-  padding: 0 20px; /* Add padding for spacing inside the wrapper */
+  padding: 0 20px; /* Add padding for spacing */
   display: flex;
   align-items: center;
 }
