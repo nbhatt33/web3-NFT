@@ -32,7 +32,7 @@ function NFTImage({ tokenId }) {
 
         // Handle image URI
         if (metadata.image) {
-          const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`; // 使用你自己的 IPFS 网关
+          const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
           setImageURI(imageURI);
           
         }
