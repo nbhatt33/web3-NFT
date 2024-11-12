@@ -100,7 +100,7 @@ function App() {
     try {
       // Upload Image to IPFS
       const addedImage = await ipfs.add(imageFile);
-      const imageURI = addedImage.path;
+      const imageURI = addedImage.path; // Like this: QmW3NgHMb6rssPazmym2VxgaeAg1j48HVWCti1u6UA9AAc
       await ipfs.pin.add(imageURI); // No GC
       toast.info('Image uploaded to IPFS');
       
