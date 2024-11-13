@@ -2,11 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserProvider, Contract, parseEther, formatEther } from 'ethers';
 import NFTMarketplaceABI from './NFTMarketplaceABI.json';
+import ContractAddress from './ContractAddress.json';
 import './App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ipfs from './ipfs'; // Ensure this points to your IPFS client
 import NFTImage from './NFTImage'; // Import the NFTImage component
+
 
 function App() {
   // State variables
@@ -14,13 +16,22 @@ function App() {
   const [signer, setSigner] = useState(null);
   const [contract, setContract] = useState(null);
   const [currentAccount, setCurrentAccount] = useState(null);
-  const [contractAddress, setContractAddress] = useState('0x345ABB645864755320450984FC60372195EaAE53'); // Replace with actual address
+  const [contractAddress, setContractAddress] = useState(ContractAddress.address);
 
   // Minting states
   const [imageFile, setImageFile] = useState(null);
   const [mintRoyalty, setMintRoyalty] = useState('');
   const [nftName, setNftName] = useState('');
   const [nftDescription, setNftDescription] = useState('');
+
+  // User owned tokens
+  const [ownedTokens, setOwnedTokens] = useState([]);
+
+  // Privately Transfer Token (unlisted token)
+  const [transferTokenId, setTransferTokenId] = useState('');
+  const [transferToAddress, setTransferToAddress] = useState('');
+  const [confirmToAddress, setConfirmToAddress] = useState('');
+
 
   // Listing states
   const [listTokenId, setListTokenId] = useState('');
@@ -131,6 +142,7 @@ function App() {
       setNftName('');
       setNftDescription('');
       fetchListedTokens();
+      fetchOwnedTokens(); // Refresh owned NFTs
     } catch (error) {
       console.error('Minting error:', error);
       toast.error('Failed to mint NFT.');
@@ -161,6 +173,7 @@ function App() {
       setListTokenId('');
       setListPrice('');
       fetchListedTokens();
+      fetchOwnedTokens(); // Refresh owned NFTs
     } catch (error) {
       console.error('Listing error:', error);
       toast.error('Failed to list NFT.');
@@ -188,6 +201,7 @@ function App() {
       toast.success(`Token ID ${tokenId} unlisted successfully`);
       setUnlistTokenId('');
       fetchListedTokens();
+      fetchOwnedTokens(); // Refresh owned NFTs
     } catch (error) {
       console.error('Unlisting error:', error);
       toast.error('Failed to unlist NFT.');
@@ -217,6 +231,7 @@ function App() {
       setPurchaseTokenId('');
       setPurchasePrice('');
       fetchListedTokens();
+      fetchOwnedTokens(); // Refresh owned NFTs
     } catch (error) {
       console.error('Purchase error:', error);
       toast.error('Failed to purchase NFT.');
@@ -308,8 +323,8 @@ function App() {
               price: formatEther(listed.price),
             });
           }
-        } catch (innerError) {
-          console.error(`Error fetching listed token for Token ID ${i}:`, innerError);
+        } catch (error) {
+          console.error(`Error fetching listed token for Token ID ${i}:`, error);
         }
       }
 
@@ -323,11 +338,50 @@ function App() {
     }
   };
 
+    // Fetch User Owned Tokens
+    const fetchOwnedTokens = async () => {
+      if (!contract) {
+        toast.error('Please connect your wallet first.');
+        return;
+      }
+  
+      if (!currentAccount) {
+        toast.error('Please connect your account first.');
+        return;
+      }
+  
+      try {
+        const balance = await contract.balanceOf(currentAccount);
+        const tokens = [];
+  
+        for (let i = 0; i < balance; i++) {
+          const tokenId = await contract.tokenOfOwnerByIndex(currentAccount, i);
+          tokens.push(parseInt(tokenId));
+        }
+  
+        setOwnedTokens(tokens);
+        if (tokens.length === 0) {
+          toast.info('You don\'t have any NFTs.');
+        }
+      } catch (error) {
+        console.error('Error fetching your owned tokens:', error);
+        toast.error('Failed to fetch owned tokens.');
+      }
+    };
+
   // Fetch listed tokens on contract change
   useEffect(() => {
     fetchListedTokens();
     // eslint-disable-next-line
   }, [contract]);
+
+  // Fetch owned tokens on account or contract change
+  useEffect(() => {
+    if (contract && currentAccount) {
+      fetchOwnedTokens();
+    }
+    // eslint-disable-next-line
+  }, [contract, currentAccount]);
 
   // Handle Account and Network Changes
   useEffect(() => {
@@ -339,9 +393,42 @@ function App() {
       window.ethereum.on('chainChanged', () => {
         window.location.reload();
       });
-      // return () => {}; should be removed listener
+      // return () => {}; TODO: Cleanup
     }
   }, []);
+
+  // Private Transfer NFT
+const handlePrivateTransfer = async () => {
+  if (!contract) {
+    toast.error('Please connect your wallet first.');
+    return;
+  }
+
+  if (!transferTokenId || !transferToAddress || !confirmToAddress) {
+    toast.error('Please provide a valid Token ID and recipient address.');
+    return;
+  }
+
+  if (transferToAddress !== confirmToAddress) {
+    toast.error('Recipient addresses do not match.');
+    return;
+  }
+
+  try {
+    const tx = await contract.privateTransferNFT(transferToAddress, transferTokenId);
+    toast.info(`Transferring Token ID ${transferTokenId} to ${transferToAddress}...`);
+    await tx.wait();
+    toast.success(`Token ID ${transferTokenId} has been successfully transferred to ${transferToAddress}.`);
+    setTransferTokenId('');
+    setTransferToAddress('');
+    setConfirmToAddress('');
+    fetchListedTokens();
+    fetchOwnedTokens(); // Refresh owned NFTs
+  } catch (error) {
+    console.error('Error transferring NFT:', error);
+    toast.error('Failed to transfer NFT.');
+  }
+};
 
   return (
     <div className="App">
@@ -393,9 +480,54 @@ function App() {
         <button onClick={handleMint}>Mint NFT</button>
       </div>
 
+      {/* User Owned Tokens Section */}
+      <div className="section">
+        <h2>3. View My owned NFTs</h2>
+        <button onClick={fetchOwnedTokens}>Refresh My owned NFTs</button>
+        <ul>
+          {ownedTokens.length > 0 ? (
+            ownedTokens.map((tokenId) => (
+              <li key={tokenId}>
+                <strong>Token ID:</strong> {tokenId}
+                <NFTImage tokenId={tokenId} />
+              </li>
+            ))
+          ) : (
+            <p>You currently do not own any NFTs.</p>
+          )}
+        </ul>
+      </div>
+
+      {/* Private Transfer NFT Section */}
+      <div className="section">
+        <h2>4. Private Transfer NFT</h2>
+        <input
+          type="number"
+          placeholder="Token ID"
+          value={transferTokenId}
+          onChange={(e) => setTransferTokenId(e.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Recipient Address"
+          value={transferToAddress}
+          onChange={(e) => setTransferToAddress(e.target.value)}
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="Confirm Recipient Address"
+          value={confirmToAddress}
+          onChange={(e) => setConfirmToAddress(e.target.value)}
+        />
+        <br />
+        <button onClick={handlePrivateTransfer}>Transfer NFT</button>
+      </div>
+
       {/* List NFT Section */}
       <div className="section">
-        <h2>3. List NFT</h2>
+        <h2>5. List NFT</h2>
         <input
           type="number"
           placeholder="Token ID"
@@ -415,7 +547,7 @@ function App() {
 
       {/* Unlist NFT Section */}
       <div className="section">
-        <h2>4. Unlist NFT</h2>
+        <h2>6. Unlist NFT</h2>
         <input
           type="number"
           placeholder="Token ID"
@@ -428,7 +560,7 @@ function App() {
 
       {/* Purchase NFT Section */}
       <div className="section">
-        <h2>5. Purchase NFT</h2>
+        <h2>7. Purchase NFT</h2>
         <input
           type="number"
           placeholder="Token ID"
@@ -448,7 +580,7 @@ function App() {
 
       {/* View Listed NFTs Section */}
       <div className="section">
-        <h2>6. View Listed NFTs</h2>
+        <h2>8. View Listed NFTs</h2>
         <button onClick={fetchListedTokens}>Refresh Listed NFTs</button>
         <ul>
           {listedTokens.length > 0 ? (
@@ -467,7 +599,7 @@ function App() {
 
       {/* Manage Marketplace Fee (Owner Only) Section */}
       <div className="section">
-        <h2>7. Manage Marketplace Fee (Owner Only)</h2>
+        <h2>9. Manage Marketplace Fee (Owner Only)</h2>
         <input
           type="number"
           placeholder="New Fee (Basis Points)"
@@ -480,7 +612,7 @@ function App() {
 
       {/* Pause/Unpause Contract (Owner Only) Section */}
       <div className="section">
-        <h2>8. Pause/Unpause Contract (Owner Only)</h2>
+        <h2>10. Pause/Unpause Contract (Owner Only)</h2>
         <button onClick={handlePause}>Pause Contract</button>
         <button onClick={handleUnpause}>Unpause Contract</button>
       </div>

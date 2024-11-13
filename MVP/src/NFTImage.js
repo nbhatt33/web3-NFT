@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserProvider, Contract } from 'ethers';
 import NFTMarketplaceABI from './NFTMarketplaceABI.json';
+import ContractAddress from './ContractAddress.json';
 import ipfs from './ipfs';
 
 function NFTImage({ tokenId }) {
@@ -12,7 +13,7 @@ function NFTImage({ tokenId }) {
     const fetchMetadata = async () => {
       try {
         const provider = new BrowserProvider(window.ethereum);
-        const contract = new Contract('0x345ABB645864755320450984FC60372195EaAE53', NFTMarketplaceABI, provider);
+        const contract = new Contract(ContractAddress.address, NFTMarketplaceABI, provider);
         const tokenURI = await contract.tokenURI(tokenId);
         console.log(`Token URI for Token ID ${tokenId}: ${tokenURI}`);
 

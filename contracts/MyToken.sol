@@ -8,9 +8,12 @@ import "@openzeppelin/contracts@4.8.0/access/Ownable.sol";
 import "@openzeppelin/contracts@4.8.0/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts@4.8.0/security/Pausable.sol";
 import "@openzeppelin/contracts@4.8.0/interfaces/IERC2981.sol";
+import "@openzeppelin/contracts@4.8.0/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard, Pausable {
-    uint256 private _tokenIds = 0;
+contract NFTMarketplace is ERC721Enumerable, ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard, Pausable {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
     uint256 public marketplaceFee = 250; // Marketplace fee in basis points (2.5%)
     address payable public feeRecipient; // Recipient of marketplace fees
 
@@ -36,6 +39,9 @@ contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard,
     event TokenPurchased(uint256 indexed tokenId, address buyer, uint256 price);
     event RoyaltySet(uint256 indexed tokenId, address recipient, uint256 amount);
 
+    // Can be tracked
+    event TokenPrivatelyTransferred(uint256 indexed tokenId, address indexed from, address indexed to);
+
     constructor(address payable _feeRecipient) ERC721("MyNFT", "MNFT") {
         feeRecipient = _feeRecipient;
     }
@@ -46,9 +52,9 @@ contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard,
         marketplaceFee = _fee;
     }
 
-    function totalSupply() public view returns (uint256) {
-        return _tokenIds;
-    }
+    // function totalSupply() public view returns (uint256) {
+    //     return _tokenIds;
+    // }
 
     // Set royalty information for a token
     function _setTokenRoyalty(uint256 tokenId, address recipient, uint256 amount) internal {
@@ -76,8 +82,8 @@ contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard,
         uint256[] memory tokenIds = new uint256[](count);
 
         for (uint256 i = 0; i < count; i++) {
-            _tokenIds++;
-            uint256 newTokenId = _tokenIds;
+            _tokenIds.increment();
+            uint256 newTokenId = _tokenIds.current();
 
             _safeMint(msg.sender, newTokenId);
             _setTokenURI(newTokenId, tokenURIs[i]);
@@ -93,9 +99,10 @@ contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard,
 
     // List NFT on the marketplace
     function listToken(uint256 tokenId, uint256 price) public whenNotPaused {
+        // Check 
+        require(!listedTokens[tokenId].isListed, "NFT is already listed");
         require(ownerOf(tokenId) == msg.sender, "You are not the owner of this NFT");
         require(price > 0, "Price must be greater than zero");
-
         // Transfer the NFT to the contract for escrow
         _transfer(msg.sender, address(this), tokenId);
 
@@ -159,6 +166,18 @@ contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard,
         }
     }
 
+    // Private transfer for unlisted NFTs
+    function privateTransferNFT(address to, uint256 tokenId) external whenNotPaused {
+        require(!listedTokens[tokenId].isListed, "Cannot transfer a listed NFT");
+        require(ownerOf(tokenId) == msg.sender, "You are not the owner of this NFT");
+        require(to != address(0), "Invalid recipient");
+
+        // Perform the transfer
+        _transfer(msg.sender, to, tokenId);
+
+        emit TokenPrivatelyTransferred(tokenId, msg.sender, to);
+    }
+
     // Pause the contract (only owner)
     function pause() external onlyOwner {
         _pause();
@@ -170,24 +189,55 @@ contract NFTMarketplace is ERC721URIStorage, IERC2981, Ownable, ReentrancyGuard,
     }
 
     // Override _beforeTokenTransfer to ensure that token transfers are paused when the contract is paused
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 tokenId,
-        uint256 batchSize
-    ) internal whenNotPaused override(ERC721) {
+    // function _beforeTokenTransfer(
+    //     address from,
+    //     address to,
+    //     uint256 tokenId,
+    //     uint256 batchSize
+    // ) internal whenNotPaused override(ERC721) {
+    //     super._beforeTokenTransfer(from, to, tokenId, batchSize);
+    // }
+
+    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
+        internal
+        whenNotPaused
+        override(ERC721, ERC721Enumerable)
+    {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    // Implement supportsInterface to handle multiple inheritance
     function supportsInterface(bytes4 interfaceId)
         public
         view
-        override(ERC721, IERC165)
+        override(ERC721, ERC721Enumerable, IERC165)
         returns (bool)
     {
-        return interfaceId == type(IERC2981).interfaceId || super.supportsInterface(interfaceId);
+        return super.supportsInterface(interfaceId);
     }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
+    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+        super._burn(tokenId);
+    }
+    
+
+    // Implement supportsInterface to handle multiple inheritance
+    // function supportsInterface(bytes4 interfaceId)
+    //     public
+    //     view
+    //     override(ERC721, IERC165)
+    //     returns (bool)
+    // {
+    //     return interfaceId == type(IERC2981).interfaceId || super.supportsInterface(interfaceId);
+    // }
 
     // Get listed token information
     function getListedToken(uint256 tokenId) public view returns (ListedToken memory) {
