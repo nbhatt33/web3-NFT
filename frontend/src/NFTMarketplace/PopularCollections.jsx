@@ -192,7 +192,7 @@ const PopularCollections = () => {
     }
   };
 
-  // 在合约实例初始化后获取数据
+
   useEffect(() => {
     if (contract) {
       fetchListedTokens();
@@ -200,7 +200,7 @@ const PopularCollections = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract]);
 
-  // 根据选定的类别过滤集合
+
   const filteredCollections = collections.filter((collection) =>
     activeCategory === 'ALL' ? true : collection.category === activeCategory
   );
