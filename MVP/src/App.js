@@ -120,7 +120,8 @@ function App() {
       const metadata = {
         name: nftName || `NFT #${Date.now()}`, // user input
         description: nftDescription || 'An NFT from NFTMarketplace', // If AI Gen, use AI prompt
-        image: imageURI,
+        // image: imageURI,
+        image: `https://ipfs.io/ipfs/${imageURI}`
       };
 
       // Upload Metadata to IPFS

@@ -14,7 +14,7 @@ This contract is deployed on the Sepolia test network at address ~~`0x345ABB6458
         name: nftName || `NFT #${Date.now()}`, // user input
         // If AI Gen, use AI prompt
         description: nftDescription || 'An NFT from NFTMarketplace', 
-        image: imageURI,
+        image: `https://ipfs.io/ipfs/${imageURI}`,
         };
      ```
    - Upload this JSON `metadata` to IPFS to obtain `metadataURI`, which will serve as the `tokenURI` for minting.

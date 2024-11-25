@@ -34,8 +34,17 @@ function NFTImage({ tokenId }) {
         // Handle image URI
         // If you can not access the image, you can use ipfs.io public gateway to access the data.
         if (metadata.image) {
-          const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+          // const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
           // const imageURI = `https://ipfs.io/ipfs/${metadata.image}`;
+          let imageURI;
+          if (/^http(s)?:\/\//.test(metadata.image)) {
+            imageURI = metadata.image.replace(
+              /^https?:\/\/ipfs\.io\/ipfs\//,
+              "http://34.72.243.54:8080/ipfs/"
+          );
+          } else {
+            imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+          }
           setImageURI(imageURI);
           
         }
