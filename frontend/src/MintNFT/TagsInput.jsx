@@ -9,13 +9,13 @@ function TagsInput() {
     <div className={styles.tagsSection}>
       <div className={styles.tagsContainer}>
         <h3 className={styles.tagsTitle}>Add Tags</h3>
-        <div className={styles.tagsList}>
-          <span className={styles.tag}>Tag 1</span>
-          <span className={styles.tag}>Tag 2</span>
-          <span className={styles.tag}>Tag 3</span>
-        </div>
+          <div className={styles.tagsList}>
+              <span className={styles.tag}>Tag 1</span>
+              <span className={styles.tag}>Tag 2</span>
+              <span className={styles.tag}>Tag 3</span>
+              <button className={styles.addTagButton} aria-label="Add new tag">+</button>
+          </div>
       </div>
-      <button className={styles.addTagButton} aria-label="Add new tag">+</button>
     </div>
   );
 }

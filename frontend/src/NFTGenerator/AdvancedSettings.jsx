@@ -6,27 +6,32 @@ import styles from './NFTGenerator.module.css';
 
 function AdvancedSettings() {
   return (
-    <section>
-      <h2 className={styles.advancedSettingsTitle}>Advanced Setting</h2>
-      <div className={styles.promptSection}>
-        <label htmlFor="prompt" className={styles.promptLabel}>Prompt</label>
-        <textarea id="prompt" className={styles.promptInput} placeholder="Text Description of your NFT" aria-label="Enter prompt for NFT generation"></textarea>
-      </div>
-      <div className={styles.styleSection}>
-        <div className={styles.styleHeader}>
-          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/29bf2853fccaab834c292d8776c8e4881ab3e1ea521be3f2f446dd371bee9841?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c" className={styles.styleIcon} alt="" />
-          <span className={styles.styleLabel}>Select A Style</span>
-        </div>
-        <div className={styles.divider} />
-      </div>
-      <div className={styles.modelSection}>
-        <div className={styles.modelHeader}>
-          <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/29bf2853fccaab834c292d8776c8e4881ab3e1ea521be3f2f446dd371bee9841?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c" className={styles.modelIcon} alt="" />
-          <span className={styles.modelLabel}>Choose a backbone model</span>
-        </div>
-        <div className={styles.divider} />
-      </div>
-    </section>
+      <section>
+          <div className={styles.styleSection}>
+              <div className={styles.styleHeader}>
+                  <img loading="lazy"
+                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/29bf2853fccaab834c292d8776c8e4881ab3e1ea521be3f2f446dd371bee9841?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c"
+                       className={styles.styleIcon} alt=""/>
+                  <span className={styles.styleLabel}>Select A Style</span>
+              </div>
+              <div className={styles.divider}/>
+          </div>
+          <div className={styles.modelSection}>
+              <div className={styles.modelHeader}>
+                  <img loading="lazy"
+                       src="https://cdn.builder.io/api/v1/image/assets/TEMP/29bf2853fccaab834c292d8776c8e4881ab3e1ea521be3f2f446dd371bee9841?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c"
+                       className={styles.modelIcon} alt=""/>
+                  <span className={styles.modelLabel}>Choose a backbone model</span>
+              </div>
+              <div className={styles.divider}/>
+          </div>
+          <h2 className={styles.advancedSettingsTitle}>Advanced Setting</h2>
+          <div className={styles.promptSection}>
+              <label htmlFor="prompt" className={styles.promptLabel}>Prompt</label>
+              <textarea id="prompt" className={styles.promptInput} placeholder="Text Description of your NFT"
+                        aria-label="Enter prompt for NFT generation"></textarea>
+          </div>
+      </section>
   );
 }
 

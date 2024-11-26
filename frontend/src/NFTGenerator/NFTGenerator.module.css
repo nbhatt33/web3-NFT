@@ -7,7 +7,7 @@
   flex-direction: column;
   overflow: hidden;
   align-items: center;
-  padding: 152px 80px 901px;
+  padding: 152px 80px 100px;
 }
 
 @media (max-width: 991px) {
@@ -19,7 +19,7 @@
 .content {
   display: flex;
   width: 100%;
-  max-width: 1566px;
+  max-width: 1400px;
   flex-direction: column;
 }
 
@@ -70,8 +70,13 @@
   display: flex;
   flex-direction: column;
   line-height: normal;
-  width: 40%;
+  width: 250px;
   margin-left: 0px;
+  border-radius: 10px;
+}
+
+.imageColumn img {
+  border-radius: 12px;
 }
 
 @media (max-width: 991px) {
@@ -98,7 +103,6 @@
   display: flex;
   flex-direction: column;
   line-height: normal;
-  width: 60%;
   margin-left: 20px;
 }
 
@@ -129,7 +133,10 @@
   color: rgba(255, 255, 255, 1);
   margin: auto 0;
   padding: 19px 25px;
-  font: 700 45px/1.4 Alumni Sans, -apple-system, Roboto, Helvetica, sans-serif;
+  width: max-content;
+  font-size: 20px;
+  font-weight: 600;
+  /*font: 700 45px/1.4 Alumni Sans, -apple-system, Roboto, Helvetica, sans-serif;*/
 }
 
 @media (max-width: 991px) {
@@ -142,12 +149,10 @@
 .mainContent {
   display: flex;
   margin-top: 54px;
-  width: 100%;
   flex-direction: column;
   font-family: Alumni Sans, sans-serif;
   color: rgba(255, 255, 255, 1);
   line-height: 1.4;
-  padding: 0 80px;
 }
 
 @media (max-width: 991px) {
@@ -161,15 +166,10 @@
 .inputSection {
   border-radius: 16px;
   background-color: rgba(27, 27, 32, 1);
-  align-self: end;
   display: flex;
-  margin-right: 30px;
-  width: 100%;
-  max-width: 1339px;
   flex-direction: column;
-  font-size: 45px;
   font-weight: 500;
-  padding: 49px 37px 22px;
+  padding: 20px 37px 22px;
 }
 
 @media (max-width: 991px) {
@@ -183,6 +183,7 @@
 
 .inputLabel {
   align-self: start;
+  font-size: 20px;
 }
 
 @media (max-width: 991px) {
@@ -192,7 +193,7 @@
 }
 
 .divider {
-  margin-top: 40px;
+  margin-top: 20px;
   height: 1px;
   border: 1px solid rgba(70, 70, 79, 1);
 }
@@ -204,10 +205,10 @@
 }
 
 .advancedSettingsTitle {
-  font-size: 45px;
+  font-size: 20px;
   font-weight: 700;
   align-self: start;
-  margin-top: 93px;
+  margin-top: 40px;
 }
 
 @media (max-width: 991px) {
@@ -220,17 +221,12 @@
 .promptSection {
   display: flex;
   margin-top: 28px;
-  width: 1125px;
-  max-width: 100%;
-  align-items: start;
-  gap: 40px 100px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .promptLabel {
-  font-size: 45px;
+  font-size: 20px;
   font-weight: 700;
-  flex-grow: 1;
   width: 82px;
 }
 
@@ -243,10 +239,12 @@
 .promptInput {
   border-radius: 16px;
   background-color: rgba(27, 27, 32, 1);
-  margin-top: 18px;
-  font-size: 36px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 43px 70px 216px;
+  padding: 20px;
+  width: 100%;
+  color: #fff;
+  margin-left: 30px;
 }
 
 @media (max-width: 991px) {
@@ -260,12 +258,11 @@
   border-radius: 16px;
   background-color: rgba(27, 27, 32, 1);
   display: flex;
-  margin-top: 86px;
-  width: 100%;
+  margin-top: 40px;
   flex-direction: column;
-  font-size: 36px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 34px 30px 21px;
+  padding: 20px 37px;
 }
 
 @media (max-width: 991px) {
@@ -286,7 +283,7 @@
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
-  width: 62px;
+  width: 45px;
   border-radius: 16px;
 }
 
@@ -299,12 +296,11 @@
   border-radius: 16px;
   background-color: rgba(27, 27, 32, 1);
   display: flex;
-  margin-top: 35px;
-  width: 100%;
+  margin-top: 40px;
   flex-direction: column;
-  font-size: 45px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 34px 30px 22px;
+  padding: 20px 37px;
 }
 
 @media (max-width: 991px) {
@@ -331,7 +327,7 @@
   aspect-ratio: 1;
   object-fit: contain;
   object-position: center;
-  width: 62px;
+  width: 45px;
   border-radius: 16px;
 }
 
@@ -352,12 +348,12 @@
   background-color: rgba(94, 81, 237, 1);
   align-self: center;
   width: 424px;
-  max-width: 100%;
-  font-size: 96px;
+  font-size: 30px;
   font-weight: 500;
   white-space: nowrap;
-  margin: 254px 0 0 28px;
+  margin-top: 50px;
   padding: 27px 70px;
+  color: #fff;
 }
 
 @media (max-width: 991px) {

@@ -21,29 +21,29 @@ function MintNFT() {
             </div>
           </div>
         </header>
-        
+
         <section className={styles.uploadSection}>
           <h2 className={styles.uploadTitle}>Upload Your Artwork</h2>
           <div className={styles.uploadArea} role="button" tabIndex="0">
             Drop here or select a file to upload
           </div>
         </section>
-        
+
         <form className={styles.formSection}>
           <CollectionSelector />
-          
+
           <InputField
             label="Name your NFT"
             className={styles.nameInput}
           />
-          
+
           <InputField
-            label="ADD SOME DESCRIPTION"
+            label="Add Some Description"
             className={styles.descriptionInput}
           />
-          
+
           <TagsInput />
-          
+
           <button type="submit" className={styles.mintButton}>MINT</button>
         </form>
       </div>

@@ -12,12 +12,13 @@ function Header() {
           <div className={styles.imageColumn}>
             <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/5d585c1f03f2c05b3b893d42a9e404f4e6cd2eb2940649f7418d52bb02dd67cf?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c" className={styles.headerImage} alt="NFT Generator illustration" />
           </div>
-          <div className={styles.textColumn}>
-            <h1 className={styles.title}>Generate Your NFT with One Click</h1>
-          </div>
+            <div className={styles.textColumn}>
+                <h1 className={styles.title}>Generate Your NFT with One Click</h1>
+                <div className={styles.creditsLeft}>10 Credits Left Today</div>
+            </div>
         </div>
       </div>
-      <div className={styles.creditsLeft}>10 Credits Left Today</div>
+
     </header>
   );
 }
