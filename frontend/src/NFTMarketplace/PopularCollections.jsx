@@ -208,7 +208,7 @@ const PopularCollections = () => {
   return (
     <section className={styles.popularCollections}>
       <h2 className={styles.sectionTitle}>Popular Collections</h2>
-      <div className={styles.categoryFilter}>
+      {/* <div className={styles.categoryFilter}>
         {categories.map((category) => (
           <button
             key={category}
@@ -218,7 +218,7 @@ const PopularCollections = () => {
             {category}
           </button>
         ))}
-      </div>
+      </div> */}
       {loading ? (
         <p>Loading collections...</p>
       ) : (
