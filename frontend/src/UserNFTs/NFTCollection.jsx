@@ -144,7 +144,8 @@ function NFTCollection() {
             {/* <img src={item.image} alt={`NFT ${item.id}`} className={styles.nftImage} /> */}
             <NFTImage tokenId={item.id} />
             {/* <p className={styles.nftName}>{item.name}</p> */}
-            <button className={styles.list} onClick={() => handleList(item.id)} >List</button>
+            <button className={styles.list} onClick={() => handleList(item.id)} >List / Transfer</button>
+            {/* <button className={styles.list} onClick={() => handleList(item.id)} >Transfer</button> */}
             
           </div>
         ))}

@@ -10,9 +10,9 @@ function NFTCard({ name, price, image }) {
       <img src={image} alt={`NFT: ${name}`} className={styles.nftImage} />
       <div className={styles.nftInfo}>
         <h2 className={styles.nftName}>{name}</h2>
-        <span className={styles.nftPrice}>106</span>
+        {/* <span className={styles.nftPrice}>106</span> */}
       </div>
-      <p className={styles.nftValue}>{price}</p>
+      <p className={styles.nftValue}>Price: {price} ETH</p>
     </article>
   );
 }
