@@ -6,6 +6,9 @@ import Marketplace from './SearchNFT/SearchNFT';
 import Mint from './MintNFT/MintNFT';
 import UserNFTs from './UserNFTs/UserNFTs';
 import Generator from './NFTGenerator/NFTGenerator'
+import Pay from './PayNFT/PayNFT';
+import List from './ListNFT/ListNFT';
+import { ToastContainer } from 'react-toastify';
 
 
 const App = () => {
@@ -19,9 +22,11 @@ const App = () => {
           <Route path="user" element={<UserNFTs />} />
           <Route path="mint" element={<Mint />} />
           <Route path="gen" element={<Generator />} />
-          {/* <Route path="wallet" element={<Wallet />} /> */}
+          <Route path="/pay/:tokenId" element={<Pay />} />
+          <Route path="/list" element={<List />} />
         </Route>
       </Routes>
+      <ToastContainer />
     </Router>
   );
 };

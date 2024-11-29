@@ -11,6 +11,19 @@
   padding: 157px 80px;
 }
 
+.list {
+  border-radius: 50px;
+  background-color: rgba(94, 81, 237, 1);
+  align-self: center;
+  font-size: 26px;
+  font-weight: 50px;
+  white-space: nowrap;
+  width: 200px;
+  padding: 16px 0;
+  color: #fff;
+  cursor: pointer;
+}
+
 .contentWrapper {
   display: flex;
   width: 100%;
