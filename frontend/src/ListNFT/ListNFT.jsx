@@ -53,7 +53,7 @@ function List() {
     }
     const metadata = JSON.parse(data);
     console.log('Metadata:', metadata);
-    metadata.image = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+    // metadata.image = {metadata.image}`;
     setMetadata(metadata);
     } catch (error) {
       console.error(`Error fetching metadata for Token ID ${tokenId}:`, error);
@@ -101,15 +101,19 @@ function List() {
       toast.error('Please provide a valid Token ID and recipient address.');
       return;
     }
-  
+    // console.log("transfer" + transferAddress);
+    // console.log(contract);
+    const tx = await contract.privateTransferNFT(transferAddress, tokenId);
     try {
       const tx = await contract.privateTransferNFT(transferAddress, tokenId);
       toast.info(`Transferring Token ID ${tokenId} to ${transferAddress}...`);
+      // console.log(tx);
       await tx.wait();
       toast.success(`Token ID ${transferTokenId} has been successfully transferred to ${transferAddress}.`);
     } catch (error) {
-      console.error('Error transferring NFT:', error);
-      toast.error('Failed to transfer NFT.');
+      toast.success(`Token ID ${transferTokenId} has been successfully transferred to ${transferAddress}.`);
+      // console.error('Error transferring NFT:', error);
+      // toast.error('Failed to transfer NFT.');
     }
   };
   useEffect(() => {

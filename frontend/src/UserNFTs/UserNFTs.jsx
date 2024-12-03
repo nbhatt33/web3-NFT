@@ -19,8 +19,8 @@ function UserNFTs() {
         </header>
         {/* <h2 className={styles.sectionTitle}>User's NFTs</h2> */}
         <NFTCollection />
-        <TransactionHistory />
-        <ProfileSettings />
+        {/* <TransactionHistory /> */}
+        {/* <ProfileSettings /> */}
       </div>
     </main>
   );

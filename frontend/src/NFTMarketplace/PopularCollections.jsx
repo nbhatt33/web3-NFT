@@ -61,7 +61,7 @@ const PopularCollections = () => {
           console.log(`Token ID ${i} is listed:`, listed);
           // console.log("Token ID:", listed.tokenId, "Type:", typeof listed.tokenId);
           // if (listed.isListed) {
-          if (1) {
+          if (listed.isListed) {
             const tokenId = Number(listed.tokenId);
             const price = formatEther(listed.price);
             let tokenURI = await contract.tokenURI(tokenId);
@@ -78,7 +78,9 @@ const PopularCollections = () => {
             }
             const metadata = JSON.parse(data);
             // console.log('Metadata:', metadata);
-            const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+            // const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+            const imageURI = metadata.image;
+            // console.log('Image URI:', imageURI);
             tokens.push({
               tokenId,
               seller: listed.seller,

@@ -97,7 +97,6 @@ const Layout = () => {
         <span className="text_1">NFT</span>
         <span className="text_2 cursor" onClick={() => goPage('/')}>Home</span>
         <span className="text_3 cursor" onClick={() => goPage('/marketplace')}>Marketplace</span>
-        <span className="text_4 cursor" onClick={() => goPage('/mint')}>Minting</span>
         <span className="text_5 cursor" onClick={() => goPage('/gen')}>AI Artwork</span>
         <span className="text_6 cursor" onClick={() => goPage('/user')}>User Profile</span>
 
