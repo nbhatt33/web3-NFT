@@ -41,6 +41,7 @@ This contract is deployed on the Sepolia test network at address ~~`0x345ABB6458
 - **`listToken`**: List an NFT for sale by transferring it to the contract address for escrow.
 - **`unlistToken`**: Unlist an NFT from sale and return it from contract address to the seller.
 - **`purchaseToken`**: Buy a listed NFT, automatically distributing payments to the seller, creator (royalty), and marketplace.
+- **`handlePrivateTransfer`**: Transfer ownership of the NFT from the current owner to a new recipient.
 - **`setMarketplaceFee`**: Adjust the marketplace fee (only accessible by the contract owner).
 - **`pause` / `unpause`**: Temporarily disable or enable contract functions (only contract owner).
 
