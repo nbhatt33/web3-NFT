@@ -33,14 +33,12 @@ function NFTGenerator() {
     const uploadedFile = acceptedFiles[0];
     
   
-    // 将文件转为 Data URL 以便预览
     const reader = new FileReader();
     reader.onload = (e) => {
-      setGeneratedImage(e.target.result); // 用于预览
+      setGeneratedImage(e.target.result); 
     };
     reader.readAsDataURL(uploadedFile);
   
-    // 创建文件流
     const fileStream = uploadedFile.stream(); 
     setGeneratedFile(fileStream);
     // processFileStream(fileStream); 
