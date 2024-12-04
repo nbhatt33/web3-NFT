@@ -161,7 +161,7 @@ import { useSelector } from 'react-redux';
 import { formatEther } from 'ethers';
 import ipfs from '../ipfs'; // If you still need this
 
-const categories = ['ALL', 'Axie', 'Accessory', 'Land', 'Item', 'Rune', 'Charm', 'Material', 'Consumable'];
+const categories = ['ALL', 'Buildings', 'Sprots', 'Art', 'Music', 'Games', 'Photography'];
 
 function SearchNFT() {
   const [activeCategory, setActiveCategory] = useState('ALL');

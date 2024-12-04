@@ -5,10 +5,7 @@ import { toast } from 'react-toastify';
 import styles from './NFTGenerator.module.css';
 import ipfs from '../ipfs';
 import { useSelector } from 'react-redux';
-
-
-const DEEPINFRA_API_KEY = "sn96KlQd3X02t4jP3BWrhJF3JAaqdmqs";
-const MODEL = "stabilityai/sd3.5-medium";
+import { useDropzone } from 'react-dropzone';
 
 
 
@@ -23,15 +20,40 @@ function NFTGenerator() {
   const [metadataHash, setMetadataHash] = useState(null);
   const [mintRoyalty, setMintRoyalty] = useState(0);
 
-  // 新增状态用于自定义名称和分类
+
   const [nftName, setNftName] = useState('');
   const [categories, setCategories] = useState('');
+  const [file, setFile] = useState(null);
   
 
   const contract = useSelector((state) => state.contract.contract);
   const currentAccount = useSelector((state) => state.wallet.walletInfo);
 
+  const onDrop = (acceptedFiles) => {
+    const uploadedFile = acceptedFiles[0];
+    
+  
+    // 将文件转为 Data URL 以便预览
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setGeneratedImage(e.target.result); // 用于预览
+    };
+    reader.readAsDataURL(uploadedFile);
+  
+    // 创建文件流
+    const fileStream = uploadedFile.stream(); 
+    setGeneratedFile(fileStream);
+    // processFileStream(fileStream); 
+  };
+  
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: 'image/*', 
+    maxFiles: 1, 
+  });
+
+  // const handleDragLeave = () => setDragging(false);
   // // Function to upload metadata to IPFS
   // const uploadToIPFS = async (metadata) => {
   //   const response = await fetch('http://localhost:8000/upload-metadata', {
@@ -207,7 +229,10 @@ function base64ToFile(base64Data, filename, contentType) {
         <div className={styles.textColumn}>
           <h1 className={styles.title}>Generate Your NFT with One Click</h1>
         </div>
-        <div className={styles.imageColumn}>
+        <div 
+          {...getRootProps()} 
+          className={`${styles.dropzone} ${isDragActive ? styles.active : ''}`}
+        >
           {generatedImage ? (
             <img
               src={generatedImage}
@@ -216,9 +241,9 @@ function base64ToFile(base64Data, filename, contentType) {
             />
           ) : (
             <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/5d585c1f03f2c05b3b893d42a9e404f4e6cd2eb2940649f7418d52bb02dd67cf?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c"
-              className={styles.headerImage}
-              alt="NFT Generator illustration"
+              src='/img.png'
+              alt="Generated NFT"
+              className={styles.dropheaderImage}
             />
           )}
         </div>

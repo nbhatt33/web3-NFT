@@ -22,12 +22,7 @@ function MintNFT() {
           </div>
         </header>
 
-        <section className={styles.uploadSection}>
-          <h2 className={styles.uploadTitle}>Upload Your Artwork</h2>
-          <div className={styles.uploadArea} role="button" tabIndex="0">
-            Drop here or select a file to upload
-          </div>
-        </section>
+
 
         <form className={styles.formSection}>
           <CollectionSelector />
