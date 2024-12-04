@@ -206,7 +206,19 @@ function SearchNFT() {
             const metadata = JSON.parse(data);
             // console.log('Metadata:', metadata);
             // const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
-            const imageURI = metadata.image;
+            let imageURI;
+            if (metadata.image) {
+              // const imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+              // const imageURI = `https://ipfs.io/ipfs/${metadata.image}`;
+              
+              if (/^http(s)?:\/\//.test(metadata.image)) {
+                imageURI = metadata.image.replace(
+                  /^https?:\/\/ipfs\.io\/ipfs\//,
+                  "http://34.72.243.54:8080/ipfs/"
+              );
+              } else {
+                imageURI = `http://34.72.243.54:8080/ipfs/${metadata.image}`;
+              }}
             tokens.push({
               tokenId,
               seller: listed.seller,
