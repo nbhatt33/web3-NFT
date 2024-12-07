@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import { ethers } from 'ethers';
-import { formatEther } from 'ethers';
 import { toast } from 'react-toastify';
 import styles from './NFTGenerator.module.css';
 import ipfs from '../ipfs';
@@ -51,17 +49,6 @@ function NFTGenerator() {
     maxFiles: 1, 
   });
 
-  // const handleDragLeave = () => setDragging(false);
-  // // Function to upload metadata to IPFS
-  // const uploadToIPFS = async (metadata) => {
-  //   const response = await fetch('http://localhost:8000/upload-metadata', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(metadata),
-  //   });
-  //   const data = await response.json();
-  //   return data.ipfs_hash;
-  // };
 
 function base64ToFile(base64Data, filename, contentType) {
   const byteString = atob(base64Data);
@@ -85,20 +72,7 @@ function base64ToFile(base64Data, filename, contentType) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt, credits: 1 }),
       });
-      // const model = new TextToImage(MODEL, DEEPINFRA_API_KEY);
-      // const response = await model.generate({
-      //   prompt: prompt,
-      // });
-    
-      // const result = await fetch(response.images[0]);
-      // if (result.ok && result.body) {
-      //   let writer = createWriteStream("image.png");
-      //   Readable.fromWeb(result.body).pipe(writer);
-      // }
-      // setGeneratedImage(result.body);
       const data = await response.json();
-      // const stream = base64ToStream(data.image_base64);
-      // const imageBlob = base64ToBlob(data.image_base64, 'image/png');
       setGeneratedImage(`data:image/png;base64,${data.image_base64}`);
       const imageFile = base64ToFile(data.image_base64, 'generated_image.png', 'image/png');
       setGeneratedFile(imageFile);
@@ -113,48 +87,6 @@ function base64ToFile(base64Data, filename, contentType) {
       setGenerating(false);
     }
   };
-
-  // const handleMintNFT = async () => {
-  //   if (!ipfsHash || !nftName || !categories) {
-  //     toast.error('Please ensure NFT is generated and all fields are filled.');
-  //     return;
-  //   }
-
-  //   try {
-  //     // Create metadata with custom name and categories
-  //     const metadata = {
-  //       name: nftName,
-  //       description: prompt,
-  //       image: `ipfs://${ipfsHash}`,
-  //       attributes: [
-  //         { trait_type: 'Category', value: categories },
-  //         { trait_type: 'AI Generated', value: 'true' },
-  //       ],
-  //     };
-
-  //     // Upload metadata to IPFS
-  //     const uploadedMetadataHash = await uploadToIPFS(metadata);
-  //     setMetadataHash(uploadedMetadataHash);
-
-  //     // Mint NFT on blockchain
-  //     // const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //     // const signer = provider.getSigner();
-  //     // const contract = new ethers.Contract(
-  //     //   NFT_MARKETPLACE_ADDRESS,
-  //     //   NFT_MARKETPLACE_ABI,
-  //     //   signer
-  //     // );
-
-
-  //     // Set royalty to 5% (500 basis points)
-  //     const tx = await contract.batchMintNFT([`ipfs://${uploadedMetadataHash}`], 500);
-  //     await tx.wait();
-
-  //     toast.info('NFT minted successfully!');
-  //   } catch (error) {
-  //     toast.error('Error minting NFT: ' + error.message);
-  //   }
-  // };
 
 
   const handleMintNFT = async () => {
@@ -207,14 +139,6 @@ function base64ToFile(base64Data, filename, contentType) {
       await tx.wait();
       toast.success('NFT minted successfully!');
 
-
-
-      // setImageFile(null);
-      // setMintRoyalty('');
-      // setNftName('');
-      // setNftDescription('');
-      // fetchListedTokens();
-      // fetchOwnedTokens(); // Refresh owned NFTs
     } catch (error) {
       console.error('Minting error:', error);
       toast.error('Failed to mint NFT.');

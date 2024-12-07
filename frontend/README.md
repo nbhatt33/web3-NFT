@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# NFT Marketplace Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This dir contains the frontend for the NFT Marketplace, a platform where users can mint, buy, and sell digital art NFTs. The application integrates with blockchain technology and provides a seamless user experience for managing NFTs.
 
-## Available Scripts
+Installation
 
-In the project directory, you can run:
+1. Clone the repository:
 
-### `npm start`
+   ```bash
+   git clone https://github.com/nbhatt33/web3-NFT.git
+   cd frontend
+   ```
+2. Install dependencies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+   ```bash
+   npm install
+   ```
+3. Start the development server:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+   ```bash
+   npm start
+   ```
 
-### `npm test`
+## Folder Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+BLOCKCHAIN/
+├── backend/                     # Backend-related files (not shown in detail in the screenshot)
+├── contracts/                   # Smart contract files and related resources
+├── frontend/                    # Frontend codebase
+│   ├── node_modules/            # Project dependencies (installed via npm)
+│   ├── public/                  # Public assets (e.g., static files like images, index.html)
+│   ├── src/                     # Source code for the frontend
+│   │   ├── layout/              # Layout components for shared UI structure
+│   │   ├── ListNFT/             # Components for listing NFTs
+│   │   ├── NFTGenerator/        # Components for generating/minting NFTs
+│   │   ├── NFTMarketplace/      # Components for the NFT marketplace page
+│   │   ├── PayNFT/              # Components for handling NFT payments
+│   │   ├── redux/               # Redux store and slices for state management
+│   │   ├── SearchNFT/           # Components for searching NFTs
+│   │   ├── UserNFTs/            # Components for managing and displaying user-owned NFTs
+│   │   ├── App.css              # Global styles for the application
+│   │   ├── App.js               # Main application entry point
+│   │   ├── ContractAddress.json # JSON file containing smart contract addresses
+│   │   ├── index.css            # Additional global styles
+│   │   ├── index.js             # Entry point for rendering the React app
+│   │   ├── ipfs.js              # Utility for interacting with IPFS
+│   │   ├── NFTImage.js          # Component for displaying NFT images
+│   │   ├── NFTMarketplaceABI.json # ABI file for interacting with the NFT Marketplace smart contract
+│   │   ├── reportWebVitals.js   # Performance monitoring setup
+│   │   ├── logo.svg             # Project logo
+│   └── ...
+├── .gitignore                   # Git configuration to exclude specific files/folders
+├── package-lock.json            # Lockfile for npm dependencies
+├── package.json                 # Configuration file for the frontend project
+├── README.md                    # Documentation for the project
+```

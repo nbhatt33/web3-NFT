@@ -4,8 +4,7 @@
 import React from 'react';
 import styles from './UserNFTs.module.css';
 import NFTCollection from './NFTCollection';
-import TransactionHistory from './TransactionHistory';
-import ProfileSettings from './ProfileSettings';
+
 
 function UserNFTs() {
   return (
@@ -13,14 +12,10 @@ function UserNFTs() {
       <div className={styles.contentWrapper}>
         <header className={styles.headerSection}>
           <div className={styles.headerContent}>
-            {/* <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/c63fb7d8e8c617e79364b26c3bd1fce9b562d38055508c113f1354f4143f9194?placeholderIfAbsent=true&apiKey=f3aaf6d180294e6db6f355070af6792c" alt="User NFT collection preview" className={styles.headerImage} /> */}
             <h1 className={styles.headerTitle}>User's NFTs</h1>
           </div>
         </header>
-        {/* <h2 className={styles.sectionTitle}>User's NFTs</h2> */}
         <NFTCollection />
-        {/* <TransactionHistory /> */}
-        {/* <ProfileSettings /> */}
       </div>
     </main>
   );

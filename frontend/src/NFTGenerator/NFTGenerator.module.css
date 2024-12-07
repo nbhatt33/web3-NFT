@@ -50,9 +50,9 @@
   border-radius: 10px;
 } */
 .imageColumn {
-  text-align: center; /* 水平居中行内内容 */
+  text-align: center; 
   width: 250px;
-  margin: 20px auto; /* 将整个元素水平居中 */
+  margin: 20px auto;
   border-radius: 10px;
 }
 
