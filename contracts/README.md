@@ -1,6 +1,6 @@
 # NFT Marketplace Smart Contract
 
-This contract is deployed on the Sepolia test network at address `0x345ABB645864755320450984FC60372195EaAE53`. The Sepolia test network operates like the main network, where each transaction requires confirmation. Before interacting with this smart contract, please obtain 0.05 Sepolia ETH from [Google's Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia) to facilitate interactions.
+This contract is deployed on the Sepolia test network at address ~~`0x345ABB645864755320450984FC60372195EaAE53`~~`0x4b4d9e3e3b31a330c7da84be0ea1266aba9dadcd`. The Sepolia test network operates like the main network, where each transaction requires confirmation. Before interacting with this smart contract, please obtain 0.05 Sepolia ETH from [Google's Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia) to facilitate interactions.
 
 ## How to Interact with the Smart Contract (Frontend)
 
@@ -10,11 +10,12 @@ This contract is deployed on the Sepolia test network at address `0x345ABB645864
    - First, upload the image to obtain an `imageURI`.
    - Then, create `metadata` as shown below:
      ```javascript
-     const metadata = {
-       name: `NFT #${Date.now()}`, // Example name
-       description: 'An NFT from NFTMarketplace',
-       image: imageURI,
-     };
+      const metadata = {
+        name: nftName || `NFT #${Date.now()}`, // user input
+        // If AI Gen, use AI prompt
+        description: nftDescription || 'An NFT from NFTMarketplace', 
+        image: `https://ipfs.io/ipfs/${imageURI}`,
+        };
      ```
    - Upload this JSON `metadata` to IPFS to obtain `metadataURI`, which will serve as the `tokenURI` for minting.
 
@@ -40,6 +41,7 @@ This contract is deployed on the Sepolia test network at address `0x345ABB645864
 - **`listToken`**: List an NFT for sale by transferring it to the contract address for escrow.
 - **`unlistToken`**: Unlist an NFT from sale and return it from contract address to the seller.
 - **`purchaseToken`**: Buy a listed NFT, automatically distributing payments to the seller, creator (royalty), and marketplace.
+- **`handlePrivateTransfer`**: Transfer ownership of the NFT from the current owner to a new recipient.
 - **`setMarketplaceFee`**: Adjust the marketplace fee (only accessible by the contract owner).
 - **`pause` / `unpause`**: Temporarily disable or enable contract functions (only contract owner).
 
